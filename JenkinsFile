@@ -1,24 +1,59 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Build') {
+        stage('install-pip-deps') {
             steps {
-                echo '... build success ... '
+                echo 'Installing Python dependencies...'
+                // Add commands to install Python dependencies using pip
             }
         }
-        stage('Tests') {
+        stage('deploy-to-dev') {
             steps {
-                echo '... tests success ... '
+                echo 'Deploying to development environment...'
+                // Add commands to deploy to development environment
             }
         }
-        stage('Deploy') {
+        stage('tests-on-dev') {
             steps {
-                echo '... deploy success ... '
+                echo 'Running tests on development environment...'
+                // Add commands to run tests on development environment
             }
-        stage('test 3') {
+        }
+        stage('deploy-to-staging') {
             steps {
-                echo '... deploy success ... '
+                echo 'Deploying to staging environment...'
+                // Add commands to deploy to staging environment
+            }
+        }
+        stage('tests-on-staging') {
+            steps {
+                echo 'Running tests on staging environment...'
+                // Add commands to run tests on staging environment
+            }
+        }
+        stage('deploy-to-preprod') {
+            steps {
+                echo 'Deploying to pre-production environment...'
+                // Add commands to deploy to pre-production environment
+            }
+        }
+        stage('tests-on-preprod') {
+            steps {
+                echo 'Running tests on pre-production environment...'
+                // Add commands to run tests on pre-production environment
+            }
+        }
+        stage('deploy-to-prod') {
+            steps {
+                echo 'Deploying to production environment...'
+                // Add commands to deploy to production environment
+            }
+        }
+        stage('tests-on-prod') {
+            steps {
+                echo 'Running tests on production environment...'
+                // Add commands to run tests on production environment
             }
         }
     }

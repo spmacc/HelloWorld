@@ -1,98 +1,56 @@
-name: Delivery Pipeline
+name: CI
+
 
 on:
-  
+
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+
+  workflow_dispatch:
+
 
 jobs:
-  install-pip-deps:
-    name: Install Pip Dependencies
+
+  build:
+    name: Build
     runs-on: ubuntu-latest
 
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+
+      - name: Build success
+        run: echo ... build success ...
+      - name: ... check node version ... 
+        run: node -v
+
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
+
+
+    steps:    
+    - name: tests success
+      run: echo ... tests success ...
+  Deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    
     
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install Dependencies
-        run: |
-          pip install -r requirements.txt
-
-  deploy-to-dev:
-    name: Deploy to Development
+    - name: deploy success
+      run: echo ... deploy success ...
+      
+  cleanUp:
+    name: clean up 
     runs-on: ubuntu-latest
-    needs: install-pip-deps
-    steps:
-      - name: Deploy
-        run: |
-          # Your deployment script or commands here
 
-  tests-on-dev:
-    name: Run Tests on Development
-    runs-on: ubuntu-latest
-    needs: deploy-to-dev
-    steps:
-      - name: Run Tests
-        run: |
-          # Your test script or commands here
 
-  deploy-to-staging:
-    name: Deploy to Staging
-    runs-on: ubuntu-latest
-    needs: tests-on-dev
-    steps:
-      - name: Deploy
-        run: |
-          # Your deployment script or commands here
-
-  tests-on-staging:
-    name: Run Tests on Staging
-    runs-on: ubuntu-latest
-    needs: deploy-to-staging
-    steps:
-      - name: Run Tests
-        run: |
-          # Your test script or commands here
-
-  deploy-to-preprod:
-    name: Deploy to Pre-production
-    runs-on: ubuntu-latest
-    needs: tests-on-staging
-    steps:
-      - name: Deploy
-        run: |
-          # Your deployment script or commands here
-
-  tests-on-preprod:
-    name: Run Tests on Pre-production
-    runs-on: ubuntu-latest
-    needs: deploy-to-preprod
-    steps:
-      - name: Run Tests
-        run: |
-          # Your test script or commands here
-
-  deploy-to-prod:
-    name: Deploy to Production
-    runs-on: ubuntu-latest
-    needs: tests-on-preprod
-    steps:
-      - name: Deploy
-        run: |
-          # Your deployment script or commands here
-
-  tests-on-prod:
-    name: Run Tests on Production
-    runs-on: ubuntu-latest
-    needs: deploy-to-prod
-    steps:
-      - name: Run Tests
-        run: |
-          # Your test script or commands here
+    steps:       
+    - name: clean up success
+      run: echo ... clean up success ...

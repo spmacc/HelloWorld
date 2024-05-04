@@ -1,56 +1,83 @@
-name: CI
-
+name: Sample-book-app
 
 on:
-
   push:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
 
-
   workflow_dispatch:
 
-
 jobs:
-
   build:
     name: Build
-    runs-on: ubuntu-latest
-
+    runs-on: self-hosted
 
     steps:
-
       - uses: actions/checkout@v4
+      - uses: ./.github/actions/build
 
+  deploy-dev:
+    name: Deploy DEV
+    runs-on: self-hosted
+    needs: [build]
 
-      - name: Build success
-        run: echo ... build success ...
-      - name: ... check node version ... 
-        run: node -v
-
-  tests:
-    name: Tests
-    runs-on: ubuntu-latest
-
-
-    steps:    
-    - name: tests success
-      run: echo ... tests success ...
-  Deploy:
-    name: deploy
-    runs-on: ubuntu-latest
-    
-    
     steps:
-    - name: deploy success
-      run: echo ... deploy success ...
-      
-  cleanUp:
-    name: clean up 
-    runs-on: ubuntu-latest
+      - uses: actions/checkout@v4
+      - uses: ./.github/actions/deploy
+        with:
+          port: 2345
+          enviroment: 'DEV'
+
+  tests-dev:
+    name: Tests DEV
+    runs-on: self-hosted
+    needs: [deploy-dev]
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/checkout@v4
+        with:
+          repository: 'rtucicd/api-automation'
+          path: 'api-tests'    
+      - uses: ./.github/actions/test
+        with:
+          enviroment: 'DEV'
+
+  deploy-stg:
+    name: Deploy STG
+    runs-on: self-hosted
+    needs: [tests-dev]
+
+    steps:
+      - name: ... deploy success ...
+        run: echo Deplyment to STG has started ..   
+
+  tests-stg:
+    name: Tests STG
+    runs-on: self-hosted
+    needs: [deploy-stg]
+
+    steps:
+      - name: ... tests success ...
+        run: echo Testing on STG has started ..
+
+  deploy-prd:
+    name: Deploy PRD
+    runs-on: self-hosted
+    needs: [tests-stg]
+
+    steps:
+      - name: ... deploy success ...
+        run: echo Deplyment to PRD has started ..   
+
+  tests-prd:
+    name: Tests PRD
+    runs-on: self-hosted
+    needs: [deploy-prd]
+
+    steps:
+      - name: ... tests success ...
+        run: echo Testing on PRD has started ..
 
 
-    steps:       
-    - name: clean up success
-      run: echo ... clean up success ...

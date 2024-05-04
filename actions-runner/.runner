@@ -1,0 +1,9 @@
+﻿{
+  "agentId": 21,
+  "agentName": "Sindija",
+  "poolId": 1,
+  "poolName": "Default",
+  "serverUrl": "https://pipelinesghubeus25.actions.githubusercontent.com/yBnjQTZBMsGnPGcJAAlpOdkOoUUYfK61SUxLWyiwha8pG3VH4f/",
+  "gitHubUrl": "https://github.com/spmacc/HelloWorld",
+  "workFolder": "_work"
+}
